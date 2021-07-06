@@ -3,3 +3,6 @@ fmt:
 
 test:
 	go test ./...
+
+lint:
+	golint ./...
