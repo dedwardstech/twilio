@@ -1,5 +1,28 @@
 package sms
 
+const (
+	msgSenderPhone   = "From"
+	msgSenderCountry = "FromCountry"
+	msgSenderState   = "FromState"
+	msgSenderCity    = "FromCity"
+	msgSenderZip     = "FromZip"
+
+	msgReceiverPhone   = "To"
+	msgReceiverCountry = "ToCountry"
+	msgReceiverState   = "ToState"
+	msgReceiverCity    = "ToCity"
+	msgReceiverZip     = "ToZip"
+
+	msgMessageSid   = "SmsMessageSid"
+	msgSid          = "SmsSid"
+	msgAccountSid   = "AccountSid"
+	msgMediaCount   = "NumMedia"
+	msgSegmentCount = "NumSegments"
+	msgBody         = "Body"
+	msgStatus       = "SmsStatus"
+	msgAPIVersion   = "ApiVersion"
+)
+
 // Sender provides information, from a Twilio SMS webhook, about the sender of a SMS InboundMessage
 type Sender interface {
 	PhoneNumber() string
@@ -12,24 +35,25 @@ type Sender interface {
 type sender struct {
 	v map[string]string
 }
+
 func (s *sender) PhoneNumber() string {
-	return s.v["From"]
+	return s.v[msgSenderPhone]
 }
 
 func (s *sender) Country() string {
-	return s.v["FromCountry"]
+	return s.v[msgSenderCountry]
 }
 
 func (s *sender) State() string {
-	return s.v["FromState"]
+	return s.v[msgSenderState]
 }
 
 func (s *sender) City() string {
-	return s.v["FromCity"]
+	return s.v[msgSenderCity]
 }
 
 func (s *sender) Zip() string {
-	return s.v["FromZip"]
+	return s.v[msgSenderZip]
 }
 
 // Receiver provides information, from a Twilio SMS webhook, about the receiver of a SMS InboundMessage
@@ -46,23 +70,23 @@ type receiver struct {
 }
 
 func (s *receiver) PhoneNumber() string {
-	return s.v["To"]
+	return s.v[msgReceiverPhone]
 }
 
 func (s *receiver) Country() string {
-	return s.v["ToCountry"]
+	return s.v[msgReceiverCountry]
 }
 
 func (s *receiver) State() string {
-	return s.v["ToState"]
+	return s.v[msgReceiverState]
 }
 
 func (s *receiver) City() string {
-	return s.v["ToCity"]
+	return s.v[msgReceiverCity]
 }
 
 func (s *receiver) Zip() string {
-	return s.v["ToZip"]
+	return s.v[msgReceiverZip]
 }
 
 // InboundMessage is a SMS message sent from a user to the application
@@ -96,33 +120,33 @@ func (m *message) Receiver() Receiver {
 }
 
 func (m *message) MessageSid() string {
-	return m.v["SmsMessageSid"]
+	return m.v[msgMessageSid]
 }
 
 func (m *message) Sid() string {
-	return m.v["SmsSid"]
+	return m.v[msgSid]
 }
 
 func (m *message) AccountSid() string {
-	return m.v["AccountSid"]
+	return m.v[msgAccountSid]
 }
 
 func (m *message) MediaCount() string {
-	return m.v["NumMedia"]
+	return m.v[msgMediaCount]
 }
 
 func (m *message) SegmentCount() string {
-	return m.v["NumSegments"]
+	return m.v[msgSegmentCount]
 }
 
 func (m *message) Body() string {
-	return m.v["Body"]
+	return m.v[msgBody]
 }
 
 func (m *message) Status() string {
-	return m.v["SmsStatus"]
+	return m.v[msgStatus]
 }
 
 func (m *message) APIVersion() string {
-	return m.v["APIVersion"]
+	return m.v[msgAPIVersion]
 }
