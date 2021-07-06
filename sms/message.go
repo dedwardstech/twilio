@@ -1,20 +1,17 @@
 package sms
 
-type messageParty interface {
+// Sender provides information, from a Twilio SMS webhook, about the sender of a SMS InboundMessage
+type Sender interface {
 	PhoneNumber() string
 	Country() string
 	State() string
 	City() string
 	Zip() string
 }
-type Sender interface {
-	messageParty
-}
 
 type sender struct {
 	v map[string]string
 }
-
 func (s *sender) PhoneNumber() string {
 	return s.v["From"]
 }
@@ -35,8 +32,13 @@ func (s *sender) Zip() string {
 	return s.v["FromZip"]
 }
 
+// Receiver provides information, from a Twilio SMS webhook, about the receiver of a SMS InboundMessage
 type Receiver interface {
-	messageParty
+	PhoneNumber() string
+	Country() string
+	State() string
+	City() string
+	Zip() string
 }
 
 type receiver struct {
@@ -63,8 +65,8 @@ func (s *receiver) Zip() string {
 	return s.v["ToZip"]
 }
 
-
-type Message interface {
+// InboundMessage is a SMS message sent from a user to the application
+type InboundMessage interface {
 	Sender() Sender
 	Receiver() Receiver
 
@@ -76,7 +78,7 @@ type Message interface {
 	Body() string
 	Status() string
 
-	ApiVersion() string
+	APIVersion() string
 }
 
 type message struct {
@@ -121,6 +123,6 @@ func (m *message) Status() string {
 	return m.v["SmsStatus"]
 }
 
-func (m *message) ApiVersion() string {
-	return m.v["ApiVersion"]
+func (m *message) APIVersion() string {
+	return m.v["APIVersion"]
 }

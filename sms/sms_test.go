@@ -32,7 +32,7 @@ func TestParseFromHttpRequest(t *testing.T) {
 	v.Add("NumSegments", "2")
 	v.Add("Body", "body!")
 	v.Add("SmsStatus", "received")
-	v.Add("ApiVersion", "2010-04-01")
+	v.Add("APIVersion", "2010-04-01")
 
 	r := httptest.NewRequest("POST", "/", strings.NewReader(v.Encode()))
 
@@ -43,7 +43,7 @@ func TestParseFromHttpRequest(t *testing.T) {
 		return
 	}
 
-	m := ParseFromHttpRequest(r)
+	m := ParseInboundMsgFromRequest(r)
 
 
 	is.Equal(m.Receiver().PhoneNumber(), "7708675309")
