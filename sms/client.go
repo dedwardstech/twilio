@@ -16,7 +16,7 @@ type ClientOptions struct {
 }
 
 type Client interface {
-	NewMessageRequest(to, msg string) (*http.Request, error)
+	NewRequest(to, msg string) (*http.Request, error)
 }
 
 func NewClient(options *ClientOptions) (Client, error) {
@@ -47,7 +47,7 @@ type client struct {
 	url  string
 }
 
-func (c client) NewMessageRequest(to, msg string) (*http.Request, error) {
+func (c client) NewRequest(to, msg string) (*http.Request, error) {
 	msgDataReader := strings.NewReader(c.buildMsgData(to, msg))
 	req, err := http.NewRequest("POST", c.url, msgDataReader)
 	if err != nil {
