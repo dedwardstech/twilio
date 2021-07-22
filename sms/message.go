@@ -23,6 +23,12 @@ const (
 	msgAPIVersion   = "ApiVersion"
 )
 
+type OutboundMessage struct {
+	To   string `json:"to"`
+	From string `json:"from"`
+	Msg  string `json:"payload"`
+}
+
 // Sender provides information, from a Twilio SMS webhook, about the sender of a SMS InboundMessage
 type Sender interface {
 	PhoneNumber() string
