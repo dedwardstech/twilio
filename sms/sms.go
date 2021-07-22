@@ -4,8 +4,8 @@ import (
 	"net/http"
 )
 
-// ParseInboundMsgFromRequest ...
-func ParseInboundMsgFromRequest(r *http.Request) InboundMessage {
+// FromRequest ...
+func FromRequest(r *http.Request) InboundMessage {
 	msg := make(map[string]string)
 
 	for key, values := range r.PostForm {
