@@ -9,7 +9,7 @@ import (
 	is2 "github.com/matryer/is"
 )
 
-func Test_FromRequest(t *testing.T) {
+func TestParser_FromRequest(t *testing.T) {
 	is := is2.New(t)
 
 	v := url.Values{}
@@ -43,7 +43,8 @@ func Test_FromRequest(t *testing.T) {
 		return
 	}
 
-	m := FromRequest(r)
+	parser := NewMessageParser()
+	m := parser.FromRequest(r)
 
 	is.Equal(m.Receiver().PhoneNumber(), "7708675309")
 	is.Equal(m.Receiver().Country(), "US")

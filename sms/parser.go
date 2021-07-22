@@ -1,11 +1,18 @@
 package sms
 
-import (
-	"net/http"
-)
+import "net/http"
 
-// FromRequest ...
-func FromRequest(r *http.Request) InboundMessage {
+type MessageParser interface {
+	FromRequest(r *http.Request) InboundMessage
+}
+
+func NewMessageParser() MessageParser {
+	return &parser{}
+}
+
+type parser struct {}
+
+func (p parser) FromRequest(r * http.Request) InboundMessage {
 	msg := make(map[string]string)
 
 	for key, values := range r.PostForm {
