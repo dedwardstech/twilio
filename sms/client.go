@@ -2,10 +2,8 @@ package sms
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 	"net/url"
-	"regexp"
 	"strings"
 )
 
@@ -32,13 +30,13 @@ func NewClient(options *ClientOptions) (Client, error) {
 		return nil, errors.New("number required")
 	}
 
-	if !isValidPhoneNumber(options.Number) {
+	if !IsValidSMSNumber(options.Number) {
 		return nil, errors.New("valid phone number required")
 	}
 
 	return &client{
 		opts: options,
-		url:  fmt.Sprintf("https://api.twilio.com/2010-04-01/Accounts/%s/Messages.json", options.AccountSid),
+		url:  makeSMSUrl(options.AccountSid),
 	}, nil
 }
 
@@ -68,12 +66,4 @@ func (c client) buildMsgData(to, msg string) string {
 	msgData.Set("Body", msg)
 
 	return msgData.Encode()
-}
-
-var (
-	phoneRegex = regexp.MustCompile(`^\+[0-9]{11}$`)
-)
-
-func isValidPhoneNumber(number string) bool {
-	return phoneRegex.Match([]byte(number))
 }
